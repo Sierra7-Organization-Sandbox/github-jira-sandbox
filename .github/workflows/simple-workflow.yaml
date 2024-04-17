@@ -1,0 +1,28 @@
+name: Simple Workflow
+on: [push]
+
+# https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners
+# Select Runner Machine - GitHub Hosted or Self Hosted
+jobs:
+    run-shell-commands:
+      runs-on: ubuntu-latest
+      steps:
+          - name: Echo Test String
+            run: echo "Testing CLI"
+          - name: Multiline Command
+            run: |
+              node -v
+              npm -v
+    parallel-job-macos:
+      runs-on: macos-latest
+      steps:
+        - name: View SW Version
+          run: sw_vers
+    dependent-job:
+      runs-on: windows-latest
+      needs: run-shell-commands
+      steps:
+        - name: Echo Window's String
+          run: Write-Output "Windows String"
+        # - name: Error Step
+        #   run: doesnotexist
